@@ -1,0 +1,1 @@
+export default function Placeholder({title}){return <><div className="admin-head"><h1>{title}</h1></div><div className="panel"><p>Área preparada para gerenciamento completo de {title.toLowerCase()}.</p></div></>}
