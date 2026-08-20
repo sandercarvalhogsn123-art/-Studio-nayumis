@@ -5,6 +5,12 @@ import App from './App.jsx'
 import './styles.css'
 import './theme.css'
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(err => console.error('Falha ao registrar aplicativo:', err))
+  })
+}
+
 function StartupError({ error }) {
   const reset = () => {
     try {
