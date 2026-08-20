@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { ensureAdmin } from '../lib/admin'
 
-export default function AdminLogin() {
+export default function AdminLogin({ setAuth }) {
   const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
@@ -12,23 +13,34 @@ export default function AdminLogin() {
 
   async function handleLogin(e) {
     e.preventDefault()
-
     setLoading(true)
     setError('')
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
+    const { error: signInError } =
+      await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      })
 
-    if (error) {
+    if (signInError) {
       setError('E-mail ou senha incorretos.')
       setLoading(false)
       return
     }
 
+    const isAdmin = await ensureAdmin().catch(() => false)
+
+    if (!isAdmin) {
+      await supabase.auth.signOut()
+      setAuth?.(false)
+      setError('Este usuário não possui acesso administrativo.')
+      setLoading(false)
+      return
+    }
+
+    setAuth?.(true)
     setLoading(false)
-    navigate('/admin')
+    navigate('/admin', { replace: true })
   }
 
   return (
@@ -47,6 +59,7 @@ export default function AdminLogin() {
               placeholder="Digite seu e-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
               required
             />
           </label>
@@ -58,6 +71,7 @@ export default function AdminLogin() {
               placeholder="Digite sua senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
               required
             />
           </label>
@@ -72,7 +86,7 @@ export default function AdminLogin() {
         <button
           type="button"
           className="forgot-password"
-          onClick={() => navigate('/recuperar-senha')}
+          onClick={() => navigate('/admin/recuperar-senha')}
         >
           Esqueci minha senha
         </button>
