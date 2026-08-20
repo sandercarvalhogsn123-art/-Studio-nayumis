@@ -1,5 +1,6 @@
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Instagram, Phone, LockKeyhole } from 'lucide-react'
+import { BRAND_LOGO } from '../assets/brandLogo'
 
 export default function Layout({ settings, children }) {
   const loc = useLocation()
@@ -11,8 +12,8 @@ export default function Layout({ settings, children }) {
     <>
       <header className="top">
         <div className="brand">
-          <div className="logo">
-            {settings.logo ? <img src={settings.logo} alt={settings.name || 'Studio Nayumi Siqueira'} /> : <span>NS</span>}
+          <div className="logo brand-logo-image">
+            <img src={BRAND_LOGO} alt="Logo Studio Nayumi Siqueira" />
           </div>
           <div>
             <strong>{settings.name}</strong>
