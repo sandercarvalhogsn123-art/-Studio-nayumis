@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './styles.css'
+import './theme.css'
 
 function StartupError({ error }) {
   const reset = () => {
@@ -14,11 +15,11 @@ function StartupError({ error }) {
   }
 
   return (
-    <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 24, background: '#f7f1eb' }}>
-      <section style={{ width: 'min(560px, 92vw)', background: '#fffdfb', padding: 30, borderRadius: 20, textAlign: 'center', boxShadow: '0 12px 40px rgba(0,0,0,.06)' }}>
-        <h1 style={{ fontFamily: 'Georgia, serif', marginTop: 0 }}>Studio Nayumi Siqueira</h1>
+    <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 24, background: '#2a0018' }}>
+      <section style={{ width: 'min(560px, 92vw)', background: '#3a0826', color: '#fff8ef', padding: 30, borderRadius: 20, textAlign: 'center', boxShadow: '0 12px 40px rgba(0,0,0,.2)' }}>
+        <h1 style={{ fontFamily: 'Georgia, serif', marginTop: 0, color: '#f4d59a' }}>Studio Nayumi Siqueira</h1>
         <p>Encontramos um erro ao iniciar o site.</p>
-        <pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', textAlign: 'left', background: '#f7f1eb', padding: 12, borderRadius: 10, fontSize: 12 }}>
+        <pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', textAlign: 'left', background: '#2d061f', padding: 12, borderRadius: 10, fontSize: 12 }}>
           {String(error?.message || error || 'Erro desconhecido')}
         </pre>
         <button onClick={reset} style={{ padding: '12px 18px', border: 0, borderRadius: 12, cursor: 'pointer' }}>
