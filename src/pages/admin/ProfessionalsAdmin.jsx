@@ -1,69 +1,18 @@
 import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 
-export default function ProfessionalsAdmin({ data, setData }) {
-  const [name, setName] = useState('');
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
+const days=[['0','Dom'],['1','Seg'],['2','Ter'],['3','Qua'],['4','Qui'],['5','Sex'],['6','Sáb']];
+const emptyHours=()=>({0:null,1:['08:00','18:00'],2:['08:00','18:00'],3:['08:00','18:00'],4:['08:00','18:00'],5:['08:00','18:00'],6:null});
 
-  async function add(e) {
-    e.preventDefault();
-    if (!name.trim()) return;
-    setSaving(true);
-    setError('');
-    const { data: created, error: dbError } = await supabase
-      .from('professionals')
-      .insert({ name: name.trim(), bio: '', active: true })
-      .select()
-      .single();
-    if (dbError) { setSaving(false); setError(dbError.message); return; }
-
-    if (data.services.length) {
-      const links = data.services.map(s => ({ professional_id: created.id, service_id: s.id }));
-      const { error: linkError } = await supabase.from('professional_services').insert(links);
-      if (linkError) { setSaving(false); setError(linkError.message); return; }
-    }
-
-    const hours = [1,2,3,4,5].map(weekday => ({
-      professional_id: created.id,
-      weekday,
-      start_time: '08:00',
-      end_time: '18:00',
-      active: true
-    }));
-    const { error: hoursError } = await supabase.from('working_hours').insert(hours);
-    setSaving(false);
-    if (hoursError) { setError(hoursError.message); return; }
-
-    setData(d => ({
-      ...d,
-      professionals: [...d.professionals, {
-        id: created.id,
-        name: created.name,
-        bio: created.bio || '',
-        image: created.image_url || '',
-        active: created.active !== false,
-        services: d.services.map(s => s.id),
-        hours: {1:['08:00','18:00'],2:['08:00','18:00'],3:['08:00','18:00'],4:['08:00','18:00'],5:['08:00','18:00']}
-      }]
-    }));
-    setName('');
-  }
-
-  async function toggle(p, active) {
-    setError('');
-    const { error: dbError } = await supabase.from('professionals').update({ active }).eq('id', p.id);
-    if (dbError) { setError(dbError.message); return; }
-    setData(d => ({ ...d, professionals: d.professionals.map(x => x.id === p.id ? { ...x, active } : x) }));
-  }
-
-  return <>
-    <div className="admin-head"><h1>Profissionais</h1></div>
-    <form className="panel inline" onSubmit={add}>
-      <input placeholder="Nome da profissional" value={name} onChange={e => setName(e.target.value)} />
-      <button className="btn" disabled={saving}>{saving ? 'Salvando...' : 'Adicionar'}</button>
-    </form>
-    {error && <div className="panel"><small>{error}</small></div>}
-    <div className="panel">{data.professionals.map(p => <div className="list-row" key={p.id}><div><b>{p.name}</b><small>{p.bio || 'Bio editável'}</small></div><label className="switch">Ativa <input type="checkbox" checked={p.active} onChange={e => toggle(p, e.target.checked)} /></label></div>)}</div>
-  </>;
+export default function ProfessionalsAdmin({data,setData}){
+ const [name,setName]=useState('');const [editing,setEditing]=useState(null);const [form,setForm]=useState(null);const [saving,setSaving]=useState(false);const [error,setError]=useState('');
+ async function add(e){e.preventDefault();if(!name.trim())return;setSaving(true);setError('');const {data:created,error:dbError}=await supabase.from('professionals').insert({name:name.trim(),bio:'',active:true}).select().single();if(dbError){setSaving(false);setError(dbError.message);return}const serviceIds=data.services.map(s=>s.id);if(serviceIds.length){const {error:e2}=await supabase.from('professional_services').insert(serviceIds.map(service_id=>({professional_id:created.id,service_id})));if(e2){setSaving(false);setError(e2.message);return}}const hours=emptyHours();const {error:e3}=await supabase.from('working_hours').insert(Object.entries(hours).filter(([,v])=>v).map(([weekday,v])=>({professional_id:created.id,weekday:Number(weekday),start_time:v[0],end_time:v[1],active:true})));setSaving(false);if(e3){setError(e3.message);return}setData(d=>({...d,professionals:[...d.professionals,{id:created.id,name:created.name,bio:'',image:'',active:true,services:serviceIds,hours}]}));setName('')}
+ async function toggle(p,active){const {error:e}=await supabase.from('professionals').update({active}).eq('id',p.id);if(e){setError(e.message);return}setData(d=>({...d,professionals:d.professionals.map(x=>x.id===p.id?{...x,active}:x)}))}
+ function edit(p){setEditing(p.id);setForm({name:p.name,bio:p.bio||'',image:p.image||'',services:[...(p.services||[])],hours:{...emptyHours(),...(p.hours||{})}});setError('')}
+ function cancel(){setEditing(null);setForm(null);setError('')}
+ function serviceToggle(id,on){setForm(f=>({...f,services:on?[...new Set([...f.services,id])]:f.services.filter(x=>x!==id)}))}
+ function dayToggle(day,on){setForm(f=>({...f,hours:{...f.hours,[day]:on?(f.hours[day]||['08:00','18:00']):null}}))}
+ function timeChange(day,index,value){setForm(f=>{const v=[...(f.hours[day]||['08:00','18:00'])];v[index]=value;return {...f,hours:{...f.hours,[day]:v}}})}
+ async function saveEdit(){if(!form.name.trim())return;setSaving(true);setError('');const {error:e1}=await supabase.from('professionals').update({name:form.name.trim(),bio:form.bio,image_url:form.image||null}).eq('id',editing);if(e1){setSaving(false);setError(e1.message);return}let q=await supabase.from('professional_services').delete().eq('professional_id',editing);if(q.error){setSaving(false);setError(q.error.message);return}if(form.services.length){q=await supabase.from('professional_services').insert(form.services.map(service_id=>({professional_id:editing,service_id})));if(q.error){setSaving(false);setError(q.error.message);return}}q=await supabase.from('working_hours').delete().eq('professional_id',editing);if(q.error){setSaving(false);setError(q.error.message);return}const rows=Object.entries(form.hours).filter(([,v])=>v).map(([weekday,v])=>({professional_id:editing,weekday:Number(weekday),start_time:v[0],end_time:v[1],active:true}));if(rows.length){q=await supabase.from('working_hours').insert(rows);if(q.error){setSaving(false);setError(q.error.message);return}}setData(d=>({...d,professionals:d.professionals.map(p=>p.id===editing?{...p,name:form.name.trim(),bio:form.bio,image:form.image,services:form.services,hours:form.hours}:p)}));setSaving(false);cancel()}
+ return <><div className="admin-head"><div><span className="eyebrow">EQUIPE</span><h1>Profissionais</h1></div></div><form className="panel inline" onSubmit={add}><input placeholder="Nome da profissional" value={name} onChange={e=>setName(e.target.value)}/><button className="btn" disabled={saving}>{saving?'Salvando...':'Adicionar'}</button></form>{error&&<div className="panel"><small>{error}</small></div>}<div className="panel">{data.professionals.map(p=><div key={p.id} style={{marginBottom:18}}><div className="list-row"><div><b>{p.name}</b><small>{p.bio||'Bio editável'}</small></div><div className="inline"><button className="btn secondary" type="button" onClick={()=>edit(p)}>Editar</button><label className="switch">Ativa <input type="checkbox" checked={p.active} onChange={e=>toggle(p,e.target.checked)}/></label></div></div>{editing===p.id&&form&&<div className="panel form-grid" style={{marginTop:10}}><input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="Nome"/><input value={form.image} onChange={e=>setForm({...form,image:e.target.value})} placeholder="URL da foto"/><textarea className="span2" value={form.bio} onChange={e=>setForm({...form,bio:e.target.value})} placeholder="Bio da profissional"/><div className="span2"><b>Serviços atendidos</b><div className="chips" style={{marginTop:8}}>{data.services.map(s=><label key={s.id} className="chip"><input type="checkbox" checked={form.services.includes(s.id)} onChange={e=>serviceToggle(s.id,e.target.checked)}/> {s.name}</label>)}</div></div><div className="span2"><b>Dias e horários</b>{days.map(([d,label])=><div className="list-row" key={d}><label><input type="checkbox" checked={!!form.hours[d]} onChange={e=>dayToggle(d,e.target.checked)}/> {label}</label>{form.hours[d]?<div className="inline"><input type="time" value={form.hours[d][0]} onChange={e=>timeChange(d,0,e.target.value)}/><span>até</span><input type="time" value={form.hours[d][1]} onChange={e=>timeChange(d,1,e.target.value)}/></div>:<small>Folga</small>}</div>)}</div><div className="span2 inline"><button className="btn" type="button" disabled={saving} onClick={saveEdit}>{saving?'Salvando...':'Salvar alterações'}</button><button className="btn secondary" type="button" onClick={cancel}>Cancelar</button></div></div>}</div>)}</div></>;
 }
