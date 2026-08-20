@@ -77,3 +77,5 @@ if (!rootElement) {
 } else {
   ReactDOM.createRoot(rootElement).render(<Bootstrap />)
 }
+
+// Deploy trigger: Git repository reconnected to Vercel on 2026-08-20.
