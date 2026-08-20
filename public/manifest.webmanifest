@@ -1,0 +1,20 @@
+{
+  "name": "Studio Nayumi Siqueira",
+  "short_name": "Studio Nayumi",
+  "description": "Agenda, serviços e gestão do Studio Nayumi Siqueira — Nails & Lash",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F6EFE8",
+  "theme_color": "#F6EFE8",
+  "orientation": "portrait-primary",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
