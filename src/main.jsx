@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import App from './App.jsx'
 import './styles.css'
 
 function StartupError({ error }) {
@@ -35,34 +36,17 @@ class ErrorBoundary extends React.Component {
   }
   static getDerivedStateFromError(error) { return { error } }
   componentDidCatch(error, info) { console.error('Erro ao renderizar:', error, info) }
-  render() { return this.state.error ? <StartupError error={this.state.error} /> : this.props.children }
+  render() {
+    return this.state.error ? <StartupError error={this.state.error} /> : this.props.children
+  }
 }
 
-function Bootstrap() {
-  const [App, setApp] = useState(null)
-  const [error, setError] = useState(null)
+const rootElement = document.getElementById('root')
 
-  useEffect(() => {
-    let active = true
-    import('./App.jsx')
-      .then(mod => { if (active) setApp(() => mod.default) })
-      .catch(err => { console.error('Erro ao importar App:', err); if (active) setError(err) })
-    return () => { active = false }
-  }, [])
-
-  if (error) return <StartupError error={error} />
-  if (!App) {
-    return (
-      <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', background: '#f7f1eb' }}>
-        <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontFamily: 'Georgia, serif', marginBottom: 8 }}>Studio Nayumi Siqueira</h1>
-          <p>Carregando...</p>
-        </div>
-      </main>
-    )
-  }
-
-  return (
+if (!rootElement) {
+  document.body.innerHTML = '<div style="padding:40px;font-family:Arial">Erro: elemento #root não encontrado.</div>'
+} else {
+  ReactDOM.createRoot(rootElement).render(
     <ErrorBoundary>
       <BrowserRouter>
         <App />
@@ -70,12 +54,3 @@ function Bootstrap() {
     </ErrorBoundary>
   )
 }
-
-const rootElement = document.getElementById('root')
-if (!rootElement) {
-  document.body.innerHTML = '<div style="padding:40px;font-family:Arial">Erro: elemento #root não encontrado.</div>'
-} else {
-  ReactDOM.createRoot(rootElement).render(<Bootstrap />)
-}
-
-// Deploy trigger: Git repository reconnected to Vercel on 2026-08-20.
