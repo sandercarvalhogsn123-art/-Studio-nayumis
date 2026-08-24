@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './styles.css'
 import './theme.css'
+import './client-portal.css'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
