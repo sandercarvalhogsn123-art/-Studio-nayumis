@@ -25,5 +25,5 @@
 .agenda-confirmation-panel{display:grid;gap:12px;margin:0 0 18px;padding:18px;border:1px solid #d9c2a7;border-radius:16px;background:#fff8ef;color:#624a3c}
 .agenda-confirmation-panel p{margin:7px 0 0;color:#8b7160;font-size:13px;line-height:1.55}
 .agenda-confirmation-actions{display:flex;gap:9px;flex-wrap:wrap}
-.agenda-confirmation-panel pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.55 inherit;background:#fffdfb;border:1px solid #eee0d4;border-radius:10px;padding:12px;color:#6d5547}
+.agenda-confirmation-panel pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;font-size:12px;line-height:1.55;background:#fffdfb;border:1px solid #eee0d4;border-radius:10px;padding:12px;color:#6d5547}
 @media(max-width:650px){.agenda-modal-backdrop{padding:8px;align-items:flex-start}.agenda-edit-modal{max-height:calc(100vh - 16px);padding:15px}.agenda-edit-modal .agenda-section-title h2{font-size:23px}.agenda-confirmation-actions .btn{flex:1}}
