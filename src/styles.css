@@ -156,3 +156,10 @@
 .agenda-week-time-column>.agenda-hour-cell{display:block;width:100%;height:64px;min-height:64px;max-height:64px;margin:0;padding:0;border-radius:0;box-sizing:border-box}
 @media(max-width:650px){.agenda-day-timeline{grid-template-columns:56px minmax(0,1fr);max-height:calc(100dvh - 280px);min-height:560px}.agenda-day-timeline>.agenda-time-gutter{width:56px;min-width:56px}.agenda-day-timeline>.agenda-time-gutter>div span{font-size:10px}.agenda-day-timeline>.agenda-time-gutter>div small{font-size:9px}.agenda-day-time-column>.agenda-time-event{left:4px;right:4px;padding:6px 6px;}
 }
+
+/* Escala da agenda em meia hora, com horários finais posicionados no minuto exato. */
+.agenda-day-timeline>.agenda-day-gutter{height:1024px;min-height:1024px;position:sticky;left:0;overflow:visible;align-self:start;display:block}
+.agenda-day-timeline>.agenda-day-gutter>.agenda-time-tick{height:32px;min-height:32px;max-height:32px;display:flex;align-items:flex-start;justify-content:center;padding:3px 0 0;font-size:10px;line-height:1;color:#765743;font-variant-numeric:tabular-nums;border-bottom:1px solid #ead8c5;background:#fffdf9}
+.agenda-day-timeline>.agenda-day-gutter>.agenda-time-tick:nth-child(2n+1){font-weight:700}
+.agenda-day-gutter .agenda-end-time-label{position:absolute;right:1px;transform:translateY(-50%);z-index:8;display:block;padding:2px 2px 2px 3px;background:#fffdf9;color:#a15e35;border:1px solid #e4b78f;border-radius:4px;font-size:10px;font-weight:800;line-height:1.1;white-space:nowrap;font-variant-numeric:tabular-nums;box-shadow:0 1px 2px #51351a1c}
+@media(max-width:650px){.agenda-day-timeline>.agenda-day-gutter>.agenda-time-tick{font-size:10px;padding-top:3px}.agenda-day-gutter .agenda-end-time-label{font-size:10px;right:0;padding:2px 1px}}
