@@ -118,3 +118,24 @@
  .report-service .report-track{grid-column:1/-1;grid-row:2}
  .admin-main{padding:16px}
 }
+
+/* Mobile-first appointment editing: quick time and duration controls */
+.agenda-time-quick,.agenda-duration-quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.agenda-time-quick button,.agenda-duration-quick button{min-height:36px;padding:7px 10px;border:1px solid #e5d4c5;border-radius:9px;background:#fff;color:#705345;font-size:12px;font-weight:650;cursor:pointer;touch-action:manipulation}
+.agenda-duration-quick button.active{background:#6b2bd9;border-color:#6b2bd9;color:white}
+.agenda-edit-modal input,.agenda-edit-modal select,.agenda-edit-modal textarea{font-size:16px;min-height:44px}
+.agenda-edit-modal input[type="date"],.agenda-edit-modal input[type="time"]{width:100%;min-width:0}
+@media(max-width:650px){
+ .agenda-modal-backdrop{padding:0;align-items:stretch;overscroll-behavior:contain}
+ .agenda-edit-modal{width:100%;height:100%;height:100dvh;max-height:100dvh;min-height:0;border-radius:0;border:0;padding:14px 14px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
+ .agenda-edit-modal .agenda-section-title{position:sticky;top:-14px;z-index:5;background:#fffdfb;padding:10px 0 12px;margin: -10px 0 14px;border-bottom:1px solid #eee1d6}
+ .agenda-edit-modal .agenda-edit-form{grid-template-columns:minmax(0,1fr);gap:12px}
+ .agenda-edit-modal .agenda-edit-wide{grid-column:auto}
+ .agenda-edit-modal .agenda-edit-form label{display:block;width:100%;font-size:13px}
+ .agenda-edit-modal .agenda-edit-form input,.agenda-edit-modal .agenda-edit-form select,.agenda-edit-modal .agenda-edit-form textarea{width:100%;max-width:100%;box-sizing:border-box;margin-top:5px;min-height:46px;font-size:16px}
+ .agenda-edit-modal .agenda-edit-actions{position:sticky;bottom:calc(-14px - env(safe-area-inset-bottom));z-index:6;background:rgba(255,253,251,.98);border-top:1px solid #eadbd0;margin:18px -14px calc(-14px - env(safe-area-inset-bottom));padding:12px 14px calc(12px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr;gap:10px;backdrop-filter:blur(10px)}
+ .agenda-edit-modal .agenda-edit-actions .btn{min-height:46px;width:100%;margin:0}
+ .agenda-time-quick,.agenda-duration-quick{gap:6px}
+ .agenda-time-quick button,.agenda-duration-quick button{flex:1 0 auto;min-height:40px;font-size:13px}
+ .agenda-edit-modal .agenda-section-title h2{font-size:22px}
+}
