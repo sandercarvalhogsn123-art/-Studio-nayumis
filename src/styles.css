@@ -209,3 +209,14 @@ body{background:#fff7f1;color:#4b3024}
 .admin .agenda-card.status-confirmed{border-left-color:#a87552}
 .admin .agenda-legend{color:#806351}
 .admin .badge{background:#f3e0d3;color:#75462f}
+
+/* Cores do cabeçalho e da página inicial acompanham os seletores do editor. */
+.public-site{background:var(--brand-background,#fff7f1)}
+.public-site .top{background:color-mix(in srgb,var(--brand-background,#fff7f1) 94%,white);border-color:color-mix(in srgb,var(--brand-primary,#92512f) 18%,white)}
+.public-site .btn{background:var(--brand-primary,#92512f)}
+.public-site .btn:hover{background:color-mix(in srgb,var(--brand-primary,#92512f) 82%,#3d2418)}
+.public-site .btn.ghost{color:var(--brand-primary,#92512f);border-color:color-mix(in srgb,var(--brand-primary,#92512f) 45%,white)}
+.public-site .logo{background:var(--brand-blush,#f7e2d7);border-color:color-mix(in srgb,var(--brand-primary,#92512f) 20%,white)}
+.public-site .hero{background:var(--brand-blush,#f7e2d7)!important}
+.public-site .eyebrow,.public-site .brand small,.public-site .card span{color:var(--brand-primary,#92512f)}
+.public-site .features{border-top:1px solid color-mix(in srgb,var(--brand-primary,#92512f) 10%,white)}
