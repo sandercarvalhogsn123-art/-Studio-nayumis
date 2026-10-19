@@ -15,7 +15,7 @@ if ('serviceWorker' in navigator) {
 function StartupError({ error }) {
   const reset = () => {
     try {
-      localStorage.removeItem('nayumi-studio-v1')
+      localStorage.removeItem('nayumi-data')
       sessionStorage.clear()
     } catch {}
     window.location.reload()

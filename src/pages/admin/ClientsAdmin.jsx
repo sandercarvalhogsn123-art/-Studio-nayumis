@@ -1,7 +1,7 @@
 import {useMemo,useState} from 'react';
 import {supabase} from '../../lib/supabase';
 const blank={name:'',phone:'',email:'',notes:''};
-const digits=v=>String(v||'').replace(/\D/g,'');
+const digits=v=>String(v||'').replace(/\\D/g,'');
 export default function ClientsAdmin({data,setData}){
  const [q,setQ]=useState(''),[form,setForm]=useState(blank),[editing,setEditing]=useState(null),[showForm,setShowForm]=useState(false),[saving,setSaving]=useState(false),[error,setError]=useState(''),[selected,setSelected]=useState(null);
  const clients=useMemo(()=>{const map=new Map();(data.clients||[]).forEach(c=>map.set(c.id,c));(data.appointments||[]).forEach(a=>{const key=digits(a.phone)||a.clientName?.toLocaleLowerCase('pt-BR');if(!key)return;const existing=[...map.values()].find(c=>(digits(c.phone)&&digits(c.phone)===digits(a.phone))||c.name?.toLocaleLowerCase('pt-BR')===a.clientName?.toLocaleLowerCase('pt-BR'));if(!existing)map.set('appointment-'+key,{id:'appointment-'+key,name:a.clientName||'Cliente',phone:a.phone||'',email:a.email||'',notes:'',derived:true});});return [...map.values()].filter(c=>!q||[c.name,c.phone,c.email].some(v=>String(v||'').toLocaleLowerCase('pt-BR').includes(q.toLocaleLowerCase('pt-BR')))).sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'))},[data.clients,data.appointments,q]);
