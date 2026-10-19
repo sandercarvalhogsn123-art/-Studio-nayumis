@@ -220,3 +220,28 @@ body{background:#fff7f1;color:#4b3024}
 .public-site .hero{background:var(--brand-blush,#f7e2d7)!important}
 .public-site .eyebrow,.public-site .brand small,.public-site .card span{color:var(--brand-primary,#92512f)}
 .public-site .features{border-top:1px solid color-mix(in srgb,var(--brand-primary,#92512f) 10%,white)}
+
+/* Identidade do Studio aplicada também às telas administrativas; valores ligados ao editor. */
+.admin-site-theme{min-height:100vh;background:var(--brand-background,#fff7f1);color:#4b3024}
+.admin-site-theme .admin{--rose:var(--brand-primary,#92512f);--cream:var(--brand-background,#fff7f1);--paper:color-mix(in srgb,var(--brand-background,#fff7f1) 72%,white);--line:color-mix(in srgb,var(--brand-primary,#92512f) 18%,white);background:var(--brand-background,#fff7f1);color:#4b3024}
+.admin-site-theme .admin aside{background:#4b3024;color:#fff2e8}
+.admin-site-theme .admin aside>a.active{background:color-mix(in srgb,var(--brand-primary,#92512f) 64%,#4b3024)}
+.admin-site-theme .admin-brand>span,.admin-site-theme .admin .avatar{background:var(--brand-blush,#f7e2d7);color:var(--brand-primary,#92512f);border:1px solid color-mix(in srgb,var(--brand-primary,#92512f) 22%,white)}
+.admin-site-theme .admin-main{background:var(--brand-background,#fff7f1)}
+.admin-site-theme .panel,.admin-site-theme .stats>div,.admin-site-theme .login-card,.admin-site-theme .agenda-day-layout,.admin-site-theme .agenda-month-view,.admin-site-theme .agenda-week-view,.admin-site-theme .agenda-week-timeline,.admin-site-theme .agenda-card{background:color-mix(in srgb,var(--brand-background,#fff7f1) 72%,white);border-color:color-mix(in srgb,var(--brand-primary,#92512f) 18%,white)}
+.admin-site-theme .admin .btn{background:var(--brand-primary,#92512f);color:#fffaf6;border-color:var(--brand-primary,#92512f)}
+.admin-site-theme .admin .btn:hover{background:color-mix(in srgb,var(--brand-primary,#92512f) 82%,#3d2418)}
+.admin-site-theme .admin .btn.ghost,.admin-site-theme .admin .btn.secondary{background:var(--brand-background,#fff7f1);color:var(--brand-primary,#92512f);border:1px solid color-mix(in srgb,var(--brand-primary,#92512f) 45%,white)}
+.admin-site-theme .admin input,.admin-site-theme .admin select,.admin-site-theme .admin textarea{border-color:color-mix(in srgb,var(--brand-primary,#92512f) 30%,white);background:color-mix(in srgb,var(--brand-background,#fff7f1) 35%,white);color:#4b3024}
+.admin-site-theme .admin input:focus,.admin-site-theme .admin select:focus,.admin-site-theme .admin textarea:focus{outline:2px solid color-mix(in srgb,var(--brand-primary,#92512f) 55%,white)}
+.admin-site-theme .admin .agenda-time-quick button,.admin-site-theme .admin .agenda-duration-quick button{border-color:color-mix(in srgb,var(--brand-primary,#92512f) 24%,white);background:color-mix(in srgb,var(--brand-background,#fff7f1) 60%,white);color:#71432c}
+.admin-site-theme .admin .agenda-duration-quick button.active{background:var(--brand-primary,#92512f);border-color:var(--brand-primary,#92512f);color:white}
+.admin-site-theme .admin .agenda-edit-modal .agenda-section-title{background:color-mix(in srgb,var(--brand-background,#fff7f1) 90%,white)}
+.admin-site-theme .admin .agenda-edit-modal .agenda-edit-actions{background:color-mix(in srgb,var(--brand-background,#fff7f1) 96%,white);border-color:color-mix(in srgb,var(--brand-primary,#92512f) 20%,white)}
+.public-site .features,.public-site .card,.public-site .profile-card,.public-site .booking,.public-site .success,.public-site .review,.public-site .stats>div{border-color:color-mix(in srgb,var(--brand-primary,#92512f) 18%,white)}
+.public-site .top nav a.active{color:var(--brand-primary,#92512f)}
+.public-site .section.muted,.public-site .features{background:color-mix(in srgb,var(--brand-blush,#f7e2d7) 58%,white)}
+.public-site .review{background:color-mix(in srgb,var(--brand-blush,#f7e2d7) 48%,white)}
+.public-site .slot{border-color:color-mix(in srgb,var(--brand-primary,#92512f) 38%,white)}
+.public-site .slot.active{background:var(--brand-primary,#92512f);border-color:var(--brand-primary,#92512f);color:white}
+.public-site input:focus,.public-site select:focus,.public-site textarea:focus{outline:2px solid color-mix(in srgb,var(--brand-primary,#92512f) 55%,white)}
