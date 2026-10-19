@@ -1,6 +1,7 @@
 import { supabase, hasSupabase } from './supabase';
 
 const ok = r => (r && !r.error && Array.isArray(r.data)) ? r.data : [];
+const localDate = value => { const d=new Date(value); if(!value||Number.isNaN(d.getTime())) return String(value||'').slice(0,10); const p=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(d).map(x=>[x.type,x.value])); return `${p.year}-${p.month}-${p.day}`; };
 const statusPt = s => s==='pending'?'pendente':s==='confirmed'?'confirmado':s==='completed'?'concluido':s==='cancelled'?'cancelado':s==='no_show'?'nao_compareceu':s;
 
 export async function loadRemote(base){
@@ -22,8 +23,8 @@ export async function loadRemote(base){
     const services=ok(sv).map(s=>({id:s.id,name:s.name,category:s.category||'',description:s.description||'',price:Number(s.price||0),duration:s.duration_minutes||0,active:s.active!==false,image:s.image_url||''}));
     const psd=ok(ps), whd=ok(wh);
     const professionals=ok(pr).map(p=>({id:p.id,name:p.name,bio:p.bio||'',image:p.image_url||'',whatsapp:p.whatsapp_phone||'',active:p.active!==false,services:psd.filter(x=>x.professional_id===p.id).map(x=>x.service_id),hours:Object.fromEntries(whd.filter(x=>x.professional_id===p.id&&x.active).map(x=>[x.weekday,[String(x.start_time||'').slice(0,5),String(x.end_time||'').slice(0,5)]]))}));
-    const appointments=ok(ap).map(a=>({id:a.id,clientName:a.client_name,phone:a.client_phone,email:a.client_email||'',notes:a.notes||'',serviceId:a.service_id,professionalId:a.professional_id,date:String(a.start_datetime||'').slice(0,10),start:new Date(a.start_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),end:new Date(a.end_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),price:Number(a.price||0),status:statusPt(a.status),createdAt:a.created_at}));
-    const blocks=ok(bl).map(b=>({id:b.id,professionalId:b.professional_id,date:String(b.start_datetime||'').slice(0,10),start:new Date(b.start_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),end:new Date(b.end_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),reason:b.reason||''}));
+    const appointments=ok(ap).map(a=>({id:a.id,clientName:a.client_name,phone:a.client_phone,email:a.client_email||'',notes:a.notes||'',serviceId:a.service_id,professionalId:a.professional_id,date:localDate(a.start_datetime),start:new Date(a.start_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),end:new Date(a.end_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),price:Number(a.price||0),status:statusPt(a.status),createdAt:a.created_at}));
+    const blocks=ok(bl).map(b=>({id:b.id,professionalId:b.professional_id,date:localDate(b.start_datetime),start:new Date(b.start_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),end:new Date(b.end_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),reason:b.reason||''}));
     const expenses=ok(ft).filter(x=>x.type==='saida').map(x=>({id:x.id,description:x.description||'',category:x.category||'',amount:Number(x.amount||0),date:x.transaction_date}));
     return {...base,settings,services:services.length?services:base.services,professionals:professionals.length?professionals:base.professionals,appointments,blocks,expenses,gallery:ok(ga)};
   } catch(e){ console.error('Falha ao sincronizar dados remotos:',e); return base; }
