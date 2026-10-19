@@ -26,9 +26,10 @@ export async function loadRemote(base){
     const professionals=ok(pr).map(p=>({id:p.id,name:p.name,bio:p.bio||'',image:p.image_url||'',whatsapp:p.whatsapp_phone||'',active:p.active!==false,services:psd.filter(x=>x.professional_id===p.id).map(x=>x.service_id),hours:Object.fromEntries(whd.filter(x=>x.professional_id===p.id&&x.active).map(x=>[x.weekday,[String(x.start_time||'').slice(0,5),String(x.end_time||'').slice(0,5)]]))}));
     const appointments=ok(ap).map(a=>({id:a.id,clientName:a.client_name,phone:a.client_phone,email:a.client_email||'',notes:a.notes||'',serviceId:a.service_id,professionalId:a.professional_id,date:localDate(a.start_datetime),start:new Date(a.start_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),end:new Date(a.end_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),price:Number(a.price||0),status:statusPt(a.status),createdAt:a.created_at}));
     const blocks=ok(bl).map(b=>({id:b.id,professionalId:b.professional_id,date:localDate(b.start_datetime),start:new Date(b.start_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),end:new Date(b.end_datetime).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'}),reason:b.reason||''}));
-    const expenses=ok(ft).filter(x=>x.type==='saida').map(x=>({id:x.id,description:x.description||'',category:x.category||'',amount:Number(x.amount||0),date:x.transaction_date}));
+    const transactions=ok(ft).map(x=>({id:x.id,type:x.type||'saida',description:x.description||'',category:x.category||'',amount:Number(x.amount||0),date:x.transaction_date,appointmentId:x.appointment_id||null,professionalId:x.professional_id||null,payment_method:x.payment_method||'',status:x.status||''}));
+    const expenses=transactions.filter(x=>x.type==='saida');
     const clients=ok(cl).map(c=>({id:c.id,name:c.name||'',phone:c.phone||'',email:c.email||'',notes:c.notes||'',createdAt:c.created_at||null}));
-    return {...base,settings,services:services.length?services:base.services,professionals:professionals.length?professionals:base.professionals,appointments,blocks,expenses,gallery:ok(ga),clients};
+    return {...base,settings,services:services.length?services:base.services,professionals:professionals.length?professionals:base.professionals,appointments,blocks,expenses,gallery:ok(ga),clients,transactions};
   } catch(e){ console.error('Falha ao sincronizar dados remotos:',e); return base; }
 }
 
