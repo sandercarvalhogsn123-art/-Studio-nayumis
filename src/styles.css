@@ -163,3 +163,49 @@
 .agenda-day-timeline>.agenda-day-gutter>.agenda-time-tick:nth-child(2n+1){font-weight:700}
 .agenda-day-gutter .agenda-end-time-label{position:absolute;right:1px;transform:translateY(-50%);z-index:8;display:block;padding:2px 2px 2px 3px;background:#fffdf9;color:#a15e35;border:1px solid #e4b78f;border-radius:4px;font-size:10px;font-weight:800;line-height:1.1;white-space:nowrap;font-variant-numeric:tabular-nums;box-shadow:0 1px 2px #51351a1c}
 @media(max-width:650px){.agenda-day-timeline>.agenda-day-gutter>.agenda-time-tick{font-size:10px;padding-top:3px}.agenda-day-gutter .agenda-end-time-label{font-size:10px;right:0;padding:2px 1px}}
+
+
+/* Identidade visual Studio NS: blush, creme, cobre e rosé gold */
+:root{--cream:#fff7f1;--paper:#fffaf6;--line:#ead5c8;--rose:#92512f;--brand-copper:#8d4c2c;--brand-gold:#c28a4a;--brand-blush:#f7e1d5;--brand-ink:#4b3024;--brand-muted:#8d6c5a}
+body{background:#fff7f1;color:#4b3024}
+.public-site{color:#4b3024;background:#fff7f1}
+.public-site .top{background:rgba(255,248,242,.96);border-color:#ead5c8}
+.public-site .brand small,.public-site .eyebrow,.public-site .card span{color:#a66a35}
+.public-site .logo{background:#f4dfd2;color:#8d4c2c;border:1px solid #e8c6aa}
+.public-site .btn{background:#92512f;color:#fffaf6}
+.public-site .btn:hover{background:#783d22}
+.public-site .btn.ghost{background:#fff7f1;color:#8d4c2c;border-color:#cfa17e}
+.public-site .features,.public-site .card,.public-site .booking,.public-site .success{background:#fffaf6;border-color:#ead5c8}
+.public-site .section.muted{background:#f7e5db}
+.public-site .studio-space{background-color:#c28a65;background-image:linear-gradient(135deg,rgba(126,65,36,.88),rgba(201,142,91,.82))}
+.public-site footer{background:#4b3024;color:#fff2e8}
+.public-site footer p{color:#e7cbbb}
+.public-site input,.public-site select,.public-site textarea{border-color:#e2c9b8;background:#fffdfb;color:#4b3024}
+.public-site input:focus,.public-site select:focus,.public-site textarea:focus{outline:2px solid #c28a4a}
+.public-site .slot{border-color:#d8b59b;background:#fffaf6;color:#71432c}
+.public-site .slot.active{background:#92512f;color:#fff}
+.admin{background:#fff7f1;color:#4b3024}
+.admin aside{background:#4b3024;color:#fff2e8}
+.admin aside>a,.aside-btn{color:#f2dfd2}
+.admin aside>a.active{background:#75462f}
+.admin-brand>span{background:#c28a4a;color:#4b3024}
+.admin-main{background:#fff7f1}
+.panel,.stats>div,.login-card,.agenda-day-layout,.agenda-month-view,.agenda-week-view,.agenda-week-timeline{background:#fffaf6;border-color:#ead5c8}
+.admin .btn{background:#92512f;color:#fffaf6}
+.admin .btn.ghost,.admin .btn.secondary{background:#fff7f1;color:#8d4c2c;border:1px solid #d7b49c}
+.admin input,.admin select,.admin textarea{border-color:#e2c9b8;background:#fffdfb;color:#4b3024}
+.admin input:focus,.admin select:focus,.admin textarea:focus{outline:2px solid #c28a4a}
+.admin .agenda-months button,.admin .agenda-days button{border-color:#d8b59b;background:#fff8f2;color:#71432c}
+.admin .agenda-months button.active,.admin .agenda-days button.active{background:#92512f;color:#fff7f1;border-color:#92512f}
+.admin .agenda-week-col-head.selected{background:#f1d4c0;box-shadow:inset 0 -3px #a76538}
+.admin .agenda-day-timeline,.admin .agenda-week-timeline{background:#fff8f2}
+.admin .agenda-time-gutter,.admin .agenda-week-body>.agenda-time-gutter{background:#fffaf6}
+.admin .agenda-day-time-column,.admin .agenda-week-time-column{background-color:#f3d7c3;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,rgba(255,255,255,.5) 31px,rgba(255,255,255,.5) 32px,transparent 32px,transparent 63px,#e6c1a3 63px,#e6c1a3 64px);border-color:#e2bea0}
+.admin .agenda-time-event.status-confirmed{background:#f7eee6;border-left-color:#a87552;color:#4b3024}
+.admin .agenda-time-event.status-pending{background:#fff0db;border-left-color:#c28a4a;color:#4b3024}
+.admin .agenda-time-event.status-completed{background:#f4e9ef;border-left-color:#a987a0;color:#4b3024}
+.admin .agenda-time-event.status-noshow{background:#fbe7e0;border-left-color:#c56f5d;color:#4b3024}
+.admin .agenda-card{background:#fffaf6;border-color:#ead5c8}
+.admin .agenda-card.status-confirmed{border-left-color:#a87552}
+.admin .agenda-legend{color:#806351}
+.admin .badge{background:#f3e0d3;color:#75462f}
