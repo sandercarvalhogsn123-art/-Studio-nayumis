@@ -13,6 +13,9 @@
 @media(max-width:650px){.agenda-day-timeline{grid-template-columns:48px minmax(480px,1fr);max-height:calc(100vh - 330px);min-height:520px}.agenda-time-gutter>div{font-size:10px;padding-left:1px;padding-right:1px}.agenda-week-timeline{max-height:calc(100vh - 300px);min-height:520px}.agenda-month-grid{min-width:560px}.agenda-time-event{left:3px;right:3px;padding:5px}.agenda-time-event b{font-size:11px}}
 
 
+
+/* Make every empty point in the timeline a direct, precise click target. */
+.agenda-day-time-column,.agenda-week-time-column{cursor:crosshair;touch-action:manipulation}.agenda-slot-button{pointer-events:none}.agenda-time-event{cursor:pointer;touch-action:manipulation}
 /* Interações da agenda: horários livres, edição e confirmação */
 .agenda-slot-button{display:block;width:100%;padding:0;margin:0;appearance:none;border:0;border-bottom:1px solid rgba(255,255,255,.65);background:transparent;cursor:pointer;pointer-events:auto;position:relative;z-index:1}
 .agenda-slot-button:hover:not(:disabled){background:rgba(255,250,240,.48);box-shadow:inset 0 0 0 2px rgba(153,105,67,.25)}
