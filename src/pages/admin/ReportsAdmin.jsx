@@ -49,7 +49,7 @@ export default function ReportsAdmin({data}){
    const history=(data.appointments||[]).filter(a=>matches(a,c)&&!isCancelled(a)).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
    const completedHistory=history.filter(isCompleted);
    const lastVisit=completedHistory[completedHistory.length-1]||null;
-   const first=history[0]||null;
+   const first=completedHistory[0]||null;
    const spend=completedHistory.reduce((sum,a)=>sum+Number(a.price||0),0);
    const monthHistory=completedHistory.filter(a=>a.date.slice(0,7)===rankingMonth);
    const monthSpend=monthHistory.reduce((sum,a)=>sum+Number(a.price||0),0);
