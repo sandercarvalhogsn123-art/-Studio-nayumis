@@ -39,7 +39,7 @@ export default function ReportsAdmin({data}){
  const now=new Date();const nowDate=end;const nowTime=new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now);
  const apps=useMemo(()=>data.appointments.filter(a=>a.date>=from&&a.date<=to&&!isCancelled(a)),[data.appointments,from,to]);
  const expenses=useMemo(()=>data.expenses.filter(e=>e.date>=from&&e.date<=to),[data.expenses,from,to]);
- const income=apps.filter(a=>['confirmado','concluido','confirmed','completed'].includes(a.status)).reduce((s,a)=>s+Number(a.price||0),0);
+ const income=apps.filter(a=>['confirmado','concluido','confirmed','completed'].includes(a.status)).reduce((s,a)=>s+Number(a.price||0),0)+(data.transactions||[]).filter(t=>t.type==='entrada'&&String(t.date||'')>=from&&String(t.date||'')<=to).reduce((s,t)=>s+Number(t.amount||0),0);
  const costs=expenses.reduce((s,e)=>s+Number(e.amount||0),0);const profit=income-costs;const completed=apps.filter(isCompleted).length;
  const serviceStats=useMemo(()=>{const m=new Map();apps.forEach(a=>{const name=data.services.find(s=>s.id===a.serviceId)?.name||'Serviço';const v=m.get(name)||{name,count:0,value:0};v.count++;v.value+=Number(a.price||0);m.set(name,v)});return [...m.values()].sort((a,b)=>b.value-a.value)},[apps,data.services]);
  const max=Math.max(1,...serviceStats.map(s=>s.value));
@@ -66,7 +66,7 @@ export default function ReportsAdmin({data}){
  const allCount=[...clients].filter(c=>c.count>0).sort((a,b)=>b.count-a.count||b.spend-a.spend);
  const rankStart=useMemo(()=>{if(rankPeriod==='all')return '0000-01-01';const d=new Date(end+'T12:00:00');d.setDate(d.getDate()-(rankPeriod==='30d'?29:rankPeriod==='3m'?89:364));return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')},[rankPeriod,end]);
  const rankRows=useMemo(()=>clients.map(c=>{const visits=c.completedHistory.filter(a=>a.date>=rankStart&&a.date<=end);const rankLast=visits.reduce((latest,a)=>!latest||a.date>latest.date?a:latest,null);return {...c,rankCount:visits.length,rankRevenue:visits.reduce((sum,a)=>sum+Number(a.price||0),0),rankLast}}).filter(c=>c.rankCount>0).sort((a,b)=>rankType==='revenue'?(b.rankRevenue-a.rankRevenue||b.rankCount-a.rankCount):(b.rankCount-a.rankCount||b.rankRevenue-a.rankRevenue)),[clients,rankStart,end,rankType]);
- const rankNewClients=rankRows.filter(c=>c.firstVisit&&c.firstVisit.date>=rankStart&&c.firstVisit.date<=end).length;
+ const rankNewClients=clients.filter(c=>{const registered=c.createdAt?String(c.createdAt).slice(0,10):c.firstVisit?.date;return registered&&registered>=rankStart&&registered<=end}).length;
 
  const overdue=useMemo(()=>clients.filter(c=>c.daysSince!==null&&c.daysSince>20&&!c.hasFuture&&c.phone).map(c=>({...c,slot:nextAvailableSlot(c,data,nowDate,nowTime)})).sort((a,b)=>b.daysSince-a.daysSince),[clients,data,nowDate,nowTime]);
  function reminderMessage(c){const service=c.lastService?.name||'seu último serviço';const slot=c.slot;const when=slot?'Tenho um horário livre em '+dateObj(slot.date).toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit'})+' às '+slot.time+'. Posso reservar para você?':'Qual dia e horário fica melhor para você? Vou conferir a agenda para encontrar um horário livre.';return 'Olá, '+c.name+'! ✨ Já faz '+c.daysSince+' dias desde seu último atendimento de '+service+' no Studio Nayumi. Vamos remarcar seu próximo atendimento? '+when;}
