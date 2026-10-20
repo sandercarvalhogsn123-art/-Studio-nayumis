@@ -261,3 +261,26 @@ body{background:#fff7f1;color:#4b3024}
 
 .client-reminder-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}.client-reminder-actions .btn{margin:0}.client-reminder-actions .btn:disabled{opacity:.55;cursor:not-allowed}
 @media(max-width:760px){.client-reminder-actions{width:100%;display:grid;grid-template-columns:1fr}.client-reminder-actions .btn{width:100%;justify-content:center}}
+
+
+/* Relatórios: ranking simplificado, responsivo e organizado por etapas */
+.ranking-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;padding:0;overflow:hidden}
+.ranking-summary-item{display:grid;gap:6px;text-align:center;padding:18px 12px}
+.ranking-summary-item+ .ranking-summary-item{border-left:1px solid var(--line,#ead5c8)}
+.ranking-summary-item span{font-size:13px;color:var(--muted,#8d6c5a)}
+.ranking-summary-item strong{font-size:24px;font-weight:700;color:var(--brand-primary,#92512f)}
+.ranking-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ranking-control{display:grid;gap:6px;min-width:0}
+.ranking-control label{font-size:12px;color:var(--muted,#8d6c5a)}
+.ranking-control select{width:100%;min-width:0;min-height:42px}
+.ranking-table-panel{min-width:0}
+.ranking-table-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.ranking-table-heading h2{margin:0 0 5px}
+.ranking-table-heading .hint{margin:0;max-width:620px}
+.ranking-result-count{white-space:nowrap;font-size:12px;color:var(--muted,#8d6c5a);background:var(--brand-blush,#f7e2d7);border-radius:8px;padding:7px 9px}
+.ranking-position{display:inline-grid;place-items:center;width:27px;height:27px;border-radius:8px;background:var(--brand-blush,#f7e2d7);color:var(--brand-primary,#92512f);font-weight:800}
+.ranking-empty{text-align:center;padding:22px 8px}
+.ranking-history{padding:14px 18px}
+.ranking-history summary{cursor:pointer;font-weight:700;color:var(--brand-primary,#92512f)}
+.ranking-history .client-table-scroll{margin-top:14px}
+@media(max-width:650px){.ranking-summary-item{padding:15px 8px}.ranking-summary-item span{font-size:11px}.ranking-summary-item strong{font-size:22px}.ranking-controls{grid-template-columns:minmax(0,1fr);gap:10px}.ranking-table-heading{align-items:flex-start}.ranking-table-heading h2{font-size:18px}.ranking-table-panel .client-table-scroll table{min-width:520px}.ranking-history{padding:14px}.ranking-result-count{font-size:11px}}
