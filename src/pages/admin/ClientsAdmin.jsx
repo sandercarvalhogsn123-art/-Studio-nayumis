@@ -10,7 +10,7 @@ function parseVCard(text){
  const unfolded=String(text||'').replace(/\r\n[ \t]/g,'').replace(/\n[ \t]/g,'');
  return unfolded.split(/BEGIN:VCARD/i).slice(1).map(block=>{
   const fields=block.split(/\r?\n/);let name='',phone='',email='';
-  for(const line of fields){const ix=line.indexOf(':');if(ix<0)continue;const key=line.slice(0,ix).split(';')[0].toUpperCase(),value=unescapeVCard(line.slice(ix+1));if(key==='FN')name=value;else if(key==='N'&&!name){const p=value.split(';');name=[p[1],p[0]].filter(Boolean).join(' ').trim()}else if(key==='TEL'&&!phone)phone=value;else if(key==='EMAIL'&&!email)email=value}
+  for(const line of fields){const ix=line.indexOf(':');if(ix<0)continue;const key=line.slice(0,ix).split(';')[0].split('.').pop().toUpperCase(),value=unescapeVCard(line.slice(ix+1));if(key==='FN')name=value;else if(key==='N'&&!name){const p=value.split(';');name=[p[1],p[0]].filter(Boolean).join(' ').trim()}else if(key==='TEL'&&!phone)phone=value;else if(key==='EMAIL'&&!email)email=value}
   return{name,phone,email,notes:''};
  }).filter(x=>x.name&&digits(x.phone));
 }
