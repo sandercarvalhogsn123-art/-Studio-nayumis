@@ -25,7 +25,8 @@ function nextAvailableSlot(client,data,nowDate,nowTime){
    for(let start=Math.ceil(startLimit/30)*30;start<=Math.min(1170,endLimit-duration);start+=30){
     const end=start+duration;
     const conflict=(data.appointments||[]).some(a=>a.date===iso&&a.professionalId===p.id&&!isCancelled(a)&&start<hm(a.end)&&end>hm(a.start));
-    if(!conflict)return{date:iso,time:String(Math.floor(start/60)).padStart(2,'0')+':'+String(start%60).padStart(2,'0'),professional:p};
+    const blocked=(data.blocks||[]).some(b=>b.date===iso&&b.professionalId===p.id&&start<hm(b.end)&&end>hm(b.start));
+    if(!conflict&&!blocked)return{date:iso,time:String(Math.floor(start/60)).padStart(2,'0')+':'+String(start%60).padStart(2,'0'),professional:p};
    }
   }
  }
