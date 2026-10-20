@@ -299,3 +299,12 @@ body{background:#fff7f1;color:#4b3024}
 .finance-section-heading p{margin:0;color:var(--muted,#8d6c5a);font-size:13px}
 .finance-section-heading>span{white-space:nowrap;font-size:12px;color:var(--muted,#8d6c5a);background:var(--brand-blush,#f7e2d7);padding:7px 9px;border-radius:8px}
 @media(max-width:650px){.finance-period{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;padding:14px}.finance-period>div{grid-column:1/-1}.finance-period label{min-width:0}.finance-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.finance-stats>div{padding:14px}.finance-section-heading{align-items:center}.finance-section-heading h2{font-size:18px}}
+
+
+/* Financeiro: lançamento rápido de receita ou despesa */
+.finance-type-switch{display:flex;flex-wrap:wrap;gap:8px}
+.finance-type-switch button{min-height:40px;padding:9px 12px;border:1px solid var(--line,#ead5c8);border-radius:9px;background:#fffaf6;color:var(--brand-ink,#4b3024);font-weight:650;cursor:pointer}
+.finance-type-switch button.active.income{background:#e5f4eb;border-color:#9ac9ad;color:#17643d}
+.finance-type-switch button.active.expense{background:#f9e7e1;border-color:#d8a69a;color:#9a3f2f}
+.finance-income-value{color:#19734a}.finance-expense-value{color:#a14332}
+@media(max-width:650px){.finance-type-switch{display:grid;grid-template-columns:minmax(0,1fr)}.finance-type-switch button{width:100%;text-align:left}}
